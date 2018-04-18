@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.4.4)  16 APR 2018 00:45
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.4.4)  17 APR 2018 15:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1490,22 +1490,22 @@ Missing character: There is no ＃ in font [lmroman12-regular]:mapping=tex-text;
 
 LaTeX Warning: Command \textless invalid in math mode on input line 70.
 
-[6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 98.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 98.
+[6] [7] [8] [9] [10] [11] [12]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 158.
+ [13]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 158.
  (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 98.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 98.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 98.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 158.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 158.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 158.
  ) 
 Here is how much of TeX's memory you used:
- 25903 strings out of 493005
- 506162 string characters out of 6134597
- 531555 words of memory out of 5000000
- 29661 multiletter control sequences out of 15000+600000
+ 25962 strings out of 493005
+ 509488 string characters out of 6134597
+ 539320 words of memory out of 5000000
+ 29720 multiletter control sequences out of 15000+600000
  11667 words of font info for 62 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  57i,6n,67p,10455b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (7 pages).
+Output written on main.pdf (13 pages).
