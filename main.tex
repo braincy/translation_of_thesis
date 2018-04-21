@@ -1,7 +1,7 @@
 \documentclass[12pt, UTF8]{ctexart}
 \CTEXsetup[format={\Large\bfseries}]{section}  
 \usepackage[colorlinks,linkcolor=red]{hyperref}
-\usepackage{graphicx,amssymb,bm}
+\usepackage{graphicx,amssymb,bm,booktabs}
 \pagestyle{plain}
 \begin{document}
 	\section*{摘要}
@@ -104,57 +104,213 @@
 		\begin{equation}
 			\bm{\widetilde{x}}=\bm{x}+\eta sign(\nabla J_f(\bm{x},y,\theta))
 		\end{equation}
-		其中$\eta$是对手可以改变的参数，以控制对抗性例子的有效性。随着$\eta$的增加，攻击的成功率一般也在增长。然而，较大的干扰可能会使人们难以辨识图像（请参阅附录中的图像，范围为h）。
+		其中$\eta$是对手可以改变的参数，以控制对抗性例子的有效性。随着$\eta$的增加，攻击的成功率一般也在增长。然而，较大的干扰可能会使人们难以辨识图像（请参阅附录中的图像，其变化范围为$\eta$）。FGS攻击者受到$\ell_2$约束的限制，因为$||\eta sign(\nabla J_f(\bm{x},y,\theta))||_\infty=\max_i|\eta sign(\nabla J_f(\bm{x},y,\theta))_i|=\eta$，这控制着干扰的程度。
 		
-		
+		FGS攻击和对线性SVM的攻击根据不同的标准受到限制。为了便于比较各种分类器的鲁棒性以及我们对它们的防御效果，我们提出了一种修改FGS攻击的方法，该攻击受到$\ell_2$约束的限制。我们将这称为快速梯度（FG）攻击，我们将敌对示例定义为，
+		\begin{equation}
+			\bm{\widetilde{x}}=\bm{x}+\eta\frac{\nabla J_f(\bm{x},y,\theta)}{||\nabla J_f(\bm{x},y,\theta)||}
+		\end{equation}
+		对于FG攻击而言，$\eta$是对干扰标准$\ell_2$的约束。
 	\subsection{降低机器学习的维度}
+		在处理高维数据（意味着每个样本具有大量特征）的同时，很难弄清哪些特征很重要。应用程序约束也可能会使原始高维空间中的数据执行学习任务变得不切实际。因此降维是对高维数据有效的预处理步骤。它还可以帮助解决与“维度诅咒”相关的问题。在这种情况下，数据首先投影到较低维空间，然后将其作为ML系统的输入。
+		常见的降维算法是PCA [27]，随机投影[36]和核PCA [37]。在本文中，我们使用PCA等降维方法不仅有助于解释性和提高效率，而且还可以提高ML系统对敌对实例的鲁棒性。
+		
+		\begin{table}
+		\caption{对线性SVM和神经网络的攻击总结} 
+		\label{Table.1} 
+		\begin{center}
+			\begin{tabular*} {13 cm} {@{\extracolsep{\fill} }cccc} 
+				\toprule
+					攻击 & 分类器 & 约束 & 直观结果\\
+				\midrule
+					线性SVM最优攻击 & 线性SVM & $\ell_2$ & 趋向分类器边界\\
+					快速梯度& 神经网络 & $\ell_2$ & 最小扰动方向的一阶近似\\
+					快速渐变标志 & 神经网络 & $\ell_\infty$ & 建议不断缩放每个像素模型\\
+				\bottomrule
+			\end{tabular*} 
+		\end{center}
+		\end{table} 
 	\section{基于降维的防御}
 	\section{进行实验}
 	\section{实验结果}
-	\subsection{防御对支持向量机的影响}
 		在本节中，我们将概述我们的实验结果。我们试图回答的主要问题有：
 		\begin{itemize}
 			\item[i)] 我们的防御对策略性攻击是否有效？
-			\item[ii)] description
-			\item[iii)] description
-			\item[iv)] description
+			\item[ii)] 我们的防御能够对抗vanilla攻击？
+			\item[iii)] 我们的防御能否作用在不同分类器上？
+			\item[iv)] 我们的防御是否推广到不同的数据集？
 		\end{itemize}
-	\subsubsection{防御普通攻击}
-		图4显示了防御成功防御对SVMs的防御攻击的变化。防御大大降低了敌对的成功率。例如，在e=1.0时，使用PCA的防御方法减少了k=50的维度，减少了对手的成功从99.97% 到1.85%. 这是一个98.12%或者大约54%的敌对成功率。在e=0·5的情况下，敌对的成功率是92.77% ,k=50的防御率将敌对成功率降低到0·9%这是一个103（两个数量级）下降。使用减少维度数据的训练会导致更健壮的线性SVMs，这可以从防御的附加效果中看到。
-		图5：对MNIST数据集的防御有效性与对线性SVMs的最佳攻击的有效性。在MNIST数据集上的对抗示例成功了，与微扰的大小e=kx xk相比较。对每一个减少的维度分类器进行攻击，并绘制出防御的效果。
-		图6：在良性测试数据和敌对性能之间的SVM分类性能之间的权衡。对抗性的健壮性是kx xk的值，它允许对手达到50%误分辨率，同样，我们也注意到当我们减少在防御的投影步骤中使用的减少的维度k时，对抗的成功减少了。k=331，对抗成功率是48·75%在e=0时，下降到5.53%当k = 100。Atk=30，对抗性的成功率下降到2·63%，适度减少到2·52% k = 10.
-		在普通攻击的情况下，防御也像一个噪音移除过程，消除了敌对的干扰并留下了干净的输入数据。与战略攻击相比，我们在普通攻击中看到的增强的鲁棒性。
+		我们的评估结果证实了我们的防御在各种场景下的有效性，每种场景都有数据集、机器学习算法、攻击和降维算法的不同组合。 对于每一组评估，我们改变分类管道的特定步骤并修复其他步骤。
+		基本配置：我们首先考虑将MNIST数据集作为输入数据的分类流水线，将线性SVM作为我们的分类算法，将PCA作为我们的防御中使用的降维算法。由于我们将线性SVM作为分类器，因此我们评估其对使用2.2节中描述的线性SVM攻击生成的敌对样本的敏感性。下面我们对每个数据集来评估我们针对从测试集开始创建的对抗样本的防御。除非另有说明，否则所有防御结果均适用于完整的测试集。 为了证明我们的防御不仅在这个基线和各种配置下是鲁棒的，所以我们系统地研究了它的影响，因为管道的每个组成部分以及攻击都被改变了。
+		
+		\includegraphics[width = .9\textwidth]{figure_3_1.png}
+		
+		（a）数字'9'的良性和干扰图像（针对不具有防御的线性SVM）：左边的第一张图像是原始图像，而其他图像是利用线性SVM的攻击（从左到右）修改的，$\xi=0.5,1.0,1.5,2.0$。 干扰爬在$\xi=1.5$时开始可见，在$\xi=1.5$的图像中非常明显。 攻击是在没有任何降维的分类器$f$上进行的。
+		
+		\includegraphics[width = .9\textwidth]{figure_3_2.png}
+		
+		（b）数字'7'的干扰图像（针对没有防御的神经网络）：图像通过对神经网络的快速梯度攻击（从左到右）进行修改，$\eta\approx0.5,1.0,1.5,2.0,2.5$。 在$\eta=1.5$时，再次开始可见，在$\eta>2.0$的图像中非常明显。 攻击是在没有任何降维的分类器上进行的。
+		
+		\includegraphics[width = .9\textwidth]{figure_3_3.png}
+		
+		（c）数字'7'的干扰图像（针对具有$k=70$的基于PCA的防御的神经网络）：图像已经通过神经网络上的快速梯度攻击进行修改，采用降维输入 （从左到右），$\eta\approx0.5,1.0,1.5,2.0,2.5$。 将降维矢量投影回图像空间进行可视化。 在这种情况下，干扰在$\eta=0.5$时开始可见，并且在$\eta>1.5$的图像中非常明显。 这表明我们的防守也会使敌对扰动更容易被察觉。
+		
+		\begin{center}
+			图3：为避开线性SVM和神经网络而生成的敌对图像
+		\end{center}
+		
+		\includegraphics[width = .9\textwidth]{figure_4.png}
+		
+		\begin{center}
+			图4：针对MNIST数据集的防御对线性SVM的vanilla攻击的有效性。 MNIST数据集上的敌对示例成功率与干扰程度$\xi=||\bm{\widetilde{x}}-\bm{x}||$的关系图。 针对原始分类器进行攻击，并针对每个减小的维度k绘制防御的效果。
+		\end{center}
+	\subsection{防御对支持向量机的影响}
+		在标准情况下，我们首先回答问题ii），即“防御能否降低vanilla攻击的有效性？”和i），即针对线性SVMs的“防御能否降低策略攻击的有效性？”。
+	\subsubsection{防御vanilla攻击}
+		图4显示了成功防御对SVMs的防御攻击的变化。防御大大降低了敌对的成功率。例如，在$\xi=1.0$时，使用$了k=50$的PCA的防御方法，使对手的成功率从99.97\%降低到1.85\%。在$\xi=0.5$的情况下，敌对的成功率是92.77\% ,$k=50$的防御将敌对成功率降低到0.9\%这是两个数量级的下降。使用降维的数据训练会使得线性SVMs更健壮，这可以从防御的附加效果中看到。
+		
+		\includegraphics[width = .9\textwidth]{figure_5.png}
+		
+		\begin{center}
+			图5：针对MNIST数据集的防御对线性SVM的最优攻击的有效性。 将MNIST数据集上的干扰示例成功率与干扰幅度$\xi=||\bm{\widetilde{x}}-\bm{x}||$作图。 针对每个降维分类器执行攻击并绘制防御效果。
+		\end{center}
+	
+		\includegraphics[width = .9\textwidth]{figure_6.png}
+		
+		\begin{center}
+			图6：在良性测试数据和敌对性能之间的SVM分类性能之间的权衡。对抗性的健壮性是$||\bm{\widetilde{x}}-\bm{x}||$的值，它允许对手达到50\%的错误率。
+		\end{center}
+		
+		同样，我们也注意到当我们减少在防御的投影步骤中使用的减少的维度$k$时，对抗的成功率也在降低。在$\xi=1.0,k=331$时，对抗成功率是48.75\%，当$k=100$时下降到5.53\%。在$k=30$时，对抗性的成功率下降到2.63\%，在$k=10$时减少到2.52\%。
+		
+		在vanilla攻击下，防御就像一个噪音移除过程，消除了敌对的干扰并留下了干净的输入数据。与策略攻击相比，我们看到的是防御的鲁棒性。
 	\subsubsection{防御对最佳攻击的影响}
-		图5显示了针对线性SVMs的最优策略攻击的防御成功的变化。这个图对应的是对手意识到维度减少防御并将样本输入到管道中它的设计是为了最有效地避开减少的维度分类器。在0·5的扰动大小，没有防御的分类器的分类率是99·04%带有k=70的缩小维度分类器的分类率很低19.75%,代表一个80.25%或者是5·01的敌对成功率。然而，由于0·5是一个小的对抗预算，即使当缩小的维度图像被投射回像素空间时，微扰也将是不可见的。在1·3的敌对预算中，开始清晰可见（见第4.4节），没有防御的分类器的错误分类率是100%，大概是77.11%对于减少了70的分类器，几乎是23%降低敌对成功率。回想一下，避开低维度分类器所需要的扰动对人眼来说更清晰可见，使这些数字变得保守。我们也可以研究我们的防御对达到一定的敌对成功率所需要的对抗预算的效果。为了达到86.6%，需要一个0·3的预算，在没有防御的情况下进行分类，而对于一个带有k=70的分类器的所需预算是1·6，也就是5·33的增加。对应的数字达到90%误分类率是0·4，没有防御，1·7代表4增加。因此，我们的防御清楚地减少了一个非常强大的对手所进行的攻击的有效程度，它完全了解防御和分类器，以及进行最优攻击的能力。
+		图5显示了针对线性SVMs的最优策略攻击的防御成功的变化。这个图对应的是对手意识到维度减少防御并将样本输入到管道中的情景，它的设计是为了最有效地避开降维分类器。在0.5的扰动程度下，没有防御的分类器的分类错误率是99.04\%，$k=70$的降维分类器的分类错误率只有19.75\%，即攻击成功率分别为80.25\%和5.01\%。然而，由于0.5是一个小的干扰参数，即使当缩小的维度图像被投射回像素空间时，微扰也将是不可见的。在1.3的干扰参数中，开始清晰可见（见第4.4节），没有防御的分类器的错误分类率是100\%，大概是77.11\%的分类错误率对于的$k=70$的降维分类器，几乎是降低了23\%的攻击成功率。回想一下，避开低维度分类器所需要的扰动对人眼来说更清晰可见，使这些数字变得保守。
+		
+		我们也可以研究我们的防御对达到一定的敌对成功率所需要的对抗预算的效果。为了达到86.6\%，需要一个0.3的预算，在没有防御的情况下进行分类，而对于一个$k=70$的分类器的所需预算是1.6。对应的数字达到90\%误分类率的$k=0.4$。因此，我们的防御很明显的降低一个非常强大的对手所进行的攻击的有效程度，它完全了解防御和分类器，并拥有最有效攻击的能力。
 	\subsubsection{对防御的效用-安全权衡}
-		图6显示了在普通和敌对条件下的性能之间的权衡。这个数据集的最佳维数显然在50到30之间，其中的扭结发生在这里。通过使用更多的维度，在分类性能方面几乎没有什么好处，而且使用更少的性能对健壮性没有任何好处。在k=50时，我们看到测试集上的分类成功率下降了91.5%没有任何防御,90.29%在防御下，因此，大约有1·2%的效用损失，以k的值，与5·9的安全增益相比，因为需要引起50%的干扰测试集的错误分类从0·16增加到0·95。有了这些结果，我们就可以得出结论，我们的防御至少在基线情况下是有效的，对于线性SVMs的普通和最优攻击都是有效的。
-		现在，我们研究了我们在神经网络上的防御表现，为了证实我们关于我们的防御在机器学习分类器中的适用性的主张。
+		图6显示了在普通和敌对条件下的性能之间的权衡。这个数据集的最佳维数显然在50到30之间，其中的扭结发生在这里。通过使用更多的维度，在分类性能方面几乎没有什么好处，而且使用更少的性能对健壮性没有任何好处。在k=50时，我们看到没有任何防御时测试集上的分类成功率下降了91.5\%,而在防御下为90.29\%，因此，大约有1.2\%的效用。
+		
+		有了这些结果，我们就可以得出结论，我们的防御至少在基线情况下是有效的，对于线性SVMs的普通和最优攻击都是有效的。现在，为了证实我们关于我们的防御在机器学习分类器中的适用性的主张，我们研究了我们在神经网络上的防御表现。
 	\subsection{防御对神经网络的影响}
 	\subsection{对不同数据集的适用性}
 		接下来，我们通过更改所使用的数据集来修改基线配置。我们用线性SVMs作为分类器和PCA作为维度还原算法来显示结果。我们为人类活动识别数据集提供结果。
-	\subsubsection{对HAR数据集的辩护}
-		在图9中，显示了由于防御而导致的对抗成功的减少。在e = 1.0,对抗性的成功率从99.56% 没有防御达91.75%，k=70 和76.21% 和k=30.为了达到错误的分类率90%，需要的摄动量是0·65，没有防御，它增加到0·876，k=70，到1·26，k=30。因此，对抗性的预算增加了2个，以达到同样的敌对成功率。对效用的影响是适度的，减少了2.3% ，k =70  5·4% k = 30, 与安全获得的收益相比，这是微不足道的。
+	\subsubsection{对HAR数据集的保护}
+		在图9中，显示了由于防御而导致的攻击成功率降低。在$\xi=1.0$时,防御成功率从没有防御时的99.56\%下降到91.75\%（$k=70$）和76.21\%（$k=30$）。为了达到分类错误率90\%，没有防御时需要的干扰程度是0.65，在$k=70$时它增加到0·876，在$k=30$时为1.26。因此，攻击方的成本增加了两倍以达到同样的成功率。这对效用的影响是适用的，在$k=70$时为下降了2.3\%，在$k=30$时为5.4\%, 与安全获得的收益相比，这是微不足道的。
+		
+		\includegraphics[width = .9\textwidth]{figure_6.png}
+		\begin{center}
+			图9：对于线性SVM攻击（针对原始分类器），HAR数据集上的敌对示例与摄动幅度e。 针对防御中使用的每个减少的维度k绘制。
+		\end{center}
+		
+		\includegraphics[width = 12 cm]{table_2.png}
+		\begin{center}
+			表2：降维防御的效用值。 对于MNIST和HAR数据集，良性测试集的分类准确性针对用于基于PCA的防御的降维k的各种值以及没有防御的准确性提供。
+		\end{center}
+		
 	\subsection{对效用的影响}
-		表2显示了我们的防御对良性数据的分类精度的影响。关键的结论是，神经网络和线性SVMs的精度降低到k=50的程度是最多4%，此外，我们注意到，使用PCA的维数减少实际上可以提高分类精度，当k=70时，MNIST数据集的准确性从97.47% 到97.52%，然而，更有侵略性的维度减少，这将导致分类精度的急剧下降，这是意料之中的，因为用于分类的大部分信息都丢失，这些结果突出了我们在应用领域的防御的广泛适用性。很明显，我们防御的有效性并不是来自于MNIST数据集的特定结构的产物，他们的直觉对不同的数据有影响。
+		表2显示了我们的防御对良性数据的分类精度的影响。关键的结论是，神经网络和线性SVMs的精度降低到k=50的程度是最多4\%，此外，我们注意到，使用PCA的维数减少实际上可以提高分类精度，当$k=70$时，MNIST数据集的准确性从97.47\% 降低到97.52\%，然而，更重要的维度减少，这将导致分类精度的急剧下降，这是意料之中的，因为用于分类的大部分信息都丢失，这些结果突出了我们在应用领域的防御的广泛适用性。很明显，我们防御的有效性并不是来自于MNIST数据集的特定结构的产物，他们对不同的数据都有影响。
 	\section{讨论和限制}
 	\subsection{满足设计目标}
-		在第3.2节中，我们列出了任何辩护都应该具备的理想目标。首先，防御应该保持较高的分类精度。从表2中可以看出，对于数据集和分类器来说，有一系列缩小的维度对分类精度影响最小，在一些特定的情况下如图10：防御MNIST数据集的有效性，反对战略上的对cnn的攻击。在MNIST数据集上的对抗示例成功了，与微扰的h=kx xk相比较。攻击是针对每个子空间分类器（从算法2中获得的）进行的，并绘制出防御的效果。证明了这一点。其次，基于PCA的防御版本增加了一个开销，它是样本n的数字的多项式，以及在测试和测试期间的维度d的数量。训练减少维度分类器所需的时间和空间最多的是在原始高维空间中的分类器，因此，我们的防御在训练和测试阶段保持高效率。我们的辩护所带来的附加安全已经在前一节的各种设置中得到了说明。从图6中可以清楚地看出，改变尺寸允许ML系统所有者在实用安全空间中导航不同的点。然而，当一个系统可能受到攻击时，我们的防御系统并不有效，这将导致我们在下面讨论的限制。
+		在第3.2节中，我们列出了任何辩护都应该具备的理想目标。首先，防御应该保持较高的分类精度。从表2中可以看出，对于数据集和分类器来说，有一系列缩小的维度对分类精度影响最小，在一些特定的情况下可以证明这一点。其次，基于PCA的防御版增加了样本数量n和维度d的多项式级别的代价。训练降维分类器所需的时间和空间高于高维空间中的分类器，因此，我们的防御在训练和测试阶段保持高效率。我们的辩护所带来的附加安全已经在前一节的各种设置中得到了说明。从图6中可以清楚地看出，改变尺寸允许ML系统所有者在实用安全空间中导航不同的点。然而，当一个系统可能受到攻击时，我们的防御系统并不有效，这将导致我们在下面讨论的限制。
+		
+		\includegraphics[width = .9\textwidth]{figure_10.png}
+		\begin{center}
+			图10：MNIST数据集的防御效果与针对Papernot-CNN的战略性FG攻击相抵触。 在MNIST数据集上的对抗成功示例是相对于扰动幅度$\eta=||\bm{\widetilde{x}}-\bm{x}||$绘制的。 针对每个子分类器（从算法2获得）进行攻击并绘制防御效果。
+		\end{center}
+		
 	\subsection{限制}
 		尽管我们的防御在许多情况下降低了对抗性的成功率，但有两个主要的方面，它没有成为一种针对逃避攻击的全面防御机制：
-		1·在自己的不足:虽然我们的防守在各种情况下都能显著降低对手的成功率，但在某些情况下，对手的成功率仍然太高。在这种情况下，我们的防御系统很可能会被合并有其他的防御措施，如对抗训练［19］和整体方法［43］以建立一个针对逃避攻击的ML系统。我们的防御有一个优势，它可以与各种各样的ML分类器一起使用，它不会干扰其他防御机制的操作。此外，正如在第四部分示范的那样，我们的辩护导致了一种具有更大视觉感知能力的“意即性”的混乱。这可能有助于防御的防御，目的是探测敌对的扰动。
-		2·缺乏普遍性:在某些情况下，我们的防御能力有限。例如,在图10中,我们看到，基于PCA的防御系统几乎没有为Papernot-CNN提供安全改进（详情见第9.3条）。这一效应很可能源于这样一个事实，即CNNs已经在其卷积层中已经处于企业领域特定的知识，另外，使用PCA进行预处理的附加层不会带来任何额外的健壮性。此外，PCA可能会减少CNN的卷积层用于分类目的的本地信息的数量。解决我们防御的局限性的一个关键步骤是使用其他维度减少技术这可以将敌对的成功降低到可以忽略的水平，并与诸如CNNs这样的分类器结合在一起。在未来的工作中，我们计划探索减少维度的技术，例如自动编码器，内核PCA和各种压缩方案，以更好地理解维度减少与分类器的鲁棒性之间的关系。
+		\begin{itemize}
+			\item[1] 在自己的不足：虽然我们的防守在各种情况下都能显著降低对手的成功率，但在某些情况下，对手的成功率仍然太高。在这种情况下，我们的防御系统很可能会被合并有其他的防御措施，如对抗训练［19］和整体方法［43］以建立一个针对逃避攻击的ML系统。我们的防御有一个优势，它可以与各种各样的ML分类器一起使用，它不会干扰其他防御机制的操作。此外，正如在第四部分示范的那样，我们的辩护导致了一种具有更大视觉感知能力的“意即性”的混乱。这可能有助于防御的防御，目的是探测敌对的扰动。
+			\item[2] 缺乏普遍性:在某些情况下，我们的防御能力有限。例如,在图10中,我们看到，基于PCA的防御系统几乎没有为Papernot-CNN提供安全改进（详情见第9.3条）。这一效应很可能源于这样一个事实，即CNNs已经在其卷积层中已经处于企业领域特定的知识，另外，使用PCA进行预处理的附加层不会带来任何额外的健壮性。此外，PCA可能会减少CNN的卷积层用于分类目的的本地信息的数量。
+		\end{itemize}
+			
+		解决我们防御的局限性的一个关键步骤是使用其他维度减少技术这可以将敌对的成功降低到可以忽略的水平，并与诸如CNNs这样的分类器结合在一起。在未来的工作中，我们计划探索减少维度的技术，例如自动编码器，内核PCA和各种压缩方案，以更好地理解维度减少与分类器的鲁棒性之间的关系。
 	\section{相关工作}
 	\section{结论}
 	\section*{致谢}
+		我们要感谢Chawin Sitawarin在实验和讨论方面提供帮助。 Arjun Nitin Bhagoji由NSF和DARPA提供支持。 Daniel Cullina由DARPA支持。
 	\section*{参考}
+		\begin{itemize}
+			\item[1] Y. LeCun, Y. Bengio, and G. Hinton, “Deep learn- ing,” Nature, vol. 521, no. 7553, pp. 436–444, 2015.
+			\item[2] R. Collobert, J. Weston, L. Bottou, M. Karlen, K. Kavukcuoglu, and P. Kuksa, “Natural language processing (almost) from scratch,” Journal of Ma- chine Learning Research, vol. 12, no. Aug, pp. 2493–2537, 2011.
+			\item[3] G. V. Cormack, “Email spam filtering: A system- atic review,” Foundations and Trends in Informa- tion Retrieval, vol. 1, no. 4, pp. 335–455, 2007.
+			\item[4] D. Cires ̧An, U. Meier, J. Masci, and J. Schmidhu- ber, “Multi-column deep neural network for traffic sign classification,” Neural Networks, vol. 32, pp. 333–338, 2012.
+			\item[5] NVIDIA, “Self driving vehicles development plat- form.”
+			\item[6] N. Sˇrndic ́ and P. Laskov, “Hidost: a static machine-learning-based detector of malicious files,” EURASIP Journal on Information Security, vol. 2016, no. 1, p. 22, 2016.
+			\item[7] G. E. Dahl, J. W. Stokes, L. Deng, and D. Yu, “Large-scale malware classification using random projections and neural networks,” in 2013 IEEE In- ternational Conference on Acoustics, Speech and Signal Processing. IEEE, 2013, pp. 3422–3426.
+			\item[8] A. Krizhevsky, I. Sutskever, and G. E. Hinton, “Im- agenet classification with deep convolutional neural networks,” in Advances in neural information pro- cessing systems, 2012, pp. 1097–1105.
+			\item[9] Y. Taigman, M. Yang, M. Ranzato, and L. Wolf, “Deepface: Closing the gap to human-level perfor- mance in face verification,” in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2014, pp. 1701–1708.
+			\item[10] L. Huang, A. D. Joseph, B. Nelson, B. I. Rubin- stein, and J. Tygar, “Adversarial machine learning,” in Proceedings of the 4th ACM workshop on Secu- rity and Artificial Intelligence. ACM, 2011, pp. 43–58.
+			\item[11] M. Barreno, B. Nelson, R. Sears, A. D. Joseph, and J. D. Tygar, “Can machine learning be secure?” in Proceedings of the 2006 ACM Symposium on In- formation, computer and communications security. ACM, 2006, pp. 16–25.
+			\item[12] P. Laskov and M. Kloft, “A framework for quan- titative security analysis of machine learning,” in Proceedings of the 2nd ACM workshop on Security and artificial intelligence. ACM, 2009, pp. 1–4.
+			\item[13] B.Biggio,B.Nelson,andP.Laskov,“Poisoningat- tacks against support vector machines,” in Proceed- ings of the 29th International Conference on Ma- chine Learning (ICML-12), 2012, pp. 1807–1814.
+			\item[14] B. Biggio, I. Corona, D. Maiorca, B. Nelson, N. Sˇrndic ́, P. Laskov, G. Giacinto, and F. Roli, “Evasion attacks against machine learning at test time,” in Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, 2013, pp. 387–402.
+			\item[15] N. Papernot, P. McDaniel, S. Jha, M. Fredrikson, Z. B. Celik, and A. Swami, “The limitations of deep learning in adversarial settings,” in 2016 IEEE Eu- ropean Symposium on Security and Privacy (Eu-
+			roS\&P). IEEE, 2016, pp. 372–387.
+			\item[16] C. Szegedy, W. Zaremba, I. Sutskever, J. Bruna, D. Erhan, I. Goodfellow, and R. Fergus, “Intrigu- ing properties of neural networks,” in International Conference on Learning Representations, 2014.
+			\item[17] N. Papernot, P. McDaniel, and I. Goodfellow, “Transferability in machine learning: from phe- nomena to black-box attacks using adversarial sam- ples,” arXiv preprint arXiv:1605.07277, 2016.
+			17
+			\item[18] A. Kantchelian, J. Tygar, and A. D. Joseph, “Eva- sion and hardening of tree ensemble classifiers,” in Proceedings of the 33rd International Conference on Machine Learning (ICML-16), 2016.
+			\item[19] I. J. Goodfellow, J. Shlens, and C. Szegedy, “Ex- plaining and harnessing adversarial examples,” in International Conference on Learning Representa- tions, 2015.
+			\item[20] A. Kurakin, I. Goodfellow, and S. Bengio, “Ad- versarial examples in the physical world,” arXiv preprint arXiv:1607.02533, 2016.
+			\item[21] N. Carlini and D. Wagner, “Towards evaluating the robustness of neural networks,” in IEEE Sympo- sium on Security and Privacy, 2017.
+			\item[22] A. Nguyen, J. Yosinski, and J. Clune, “Deep neu- ral networks are easily fooled: High confidence predictions for unrecognizable images,” in 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR). IEEE, 2015, pp. 427–436.
+			\item[23] M. McCoyd and D. Wagner, “Spoofing 2d face de- tection: Machines see people who aren’t there,” arXiv preprint arXiv:1608.02128, 2016.
+			\item[24] N. Carlini, P. Mishra, T. Vaidya, Y. Zhang, M. Sherr, C. Shields, D. Wagner, and W. Zhou, “Hidden voice commands,” in 25th USENIX Secu- rity Symposium (USENIX Security 16), Austin, TX, 2016.
+			\item[25] W. Xu, Y. Qi, and D. Evans, “Automatically evad- ing classifiers,” in Proceedings of the 2016 Network and Distributed Systems Symposium, 2016.
+			\item[26] P. Russu, A. Demontis, B. Biggio, G. Fumera, and F. Roli, “Secure kernel machines against evasion attacks,” in Proceedings of the 2016 ACM Workshop on Artificial Intelligence and Security, ser. AISec ’16. New York, NY, USA: ACM, 2016, pp. 59–69. \item[Online]. Available: http://doi.acm.org/10.1145/2996758.2996771
+			\item[27] J. Shlens, “A tutorial on principal component anal- ysis,” arXiv preprint arXiv:1404.1100, 2014.
+			\item[28] L. Van Der Maaten, E. Postma, and J. Van den Herik, “Dimensionality reduction: a comparative review,” J Mach Learn Res, vol. 10, pp. 66–71, 2009.
+			\item[29] S.-M. Moosavi-Dezfooli, A. Fawzi, and P. Frossard, “Deepfool: a simple and accurate method to fool deep neural networks,” arXiv preprint arXiv:1511.04599, 2015.
+			\item[30] Y. LeCun and C. Cortes, “The mnist database of handwritten digits,” 1998.
+			\item[31] D. Anguita, A. Ghio, L. Oneto, X. Parra, and J. L. Reyes-Ortiz, “A public domain dataset for human activity recognition using smartphones.” in ESANN, 2013.
+			\item[32] N. Papernot, P. McDaniel, I. Goodfellow, S. Jha, Z. Berkay Celik, and A. Swami, “Practical black- box attacks against deep learning systems using adversarial examples,” in Proceedings of the 2017 ACM Asia Conference on Computer and Commu- nications Security.
+			\item[33] B. Nelson, B. I. Rubinstein, L. Huang, A. D. Joseph, S.-h. Lau, S. J. Lee, S. Rao, A. Tran, and J. D. Tygar, “Near-optimal evasion of convex- inducing classifiers.” in AISTATS, 2010, pp. 549– 556.
+			\item[34] B. Biggio, I. Corona, B. Nelson, B. I. Rubinstein, D. Maiorca, G. Fumera, G. Giacinto, and F. Roli, “Security evaluation of support vector machines in adversarial environments,” in Support Vector Ma- chines Applications. Springer, 2014, pp. 105–153.
+			\item[35] A. Fawzi, O. Fawzi, and P. Frossard, “Analysis of classifiers’ robustness to adversarial perturbations,” arXiv preprint arXiv:1502.02590, 2015.
+			\item[36] E. Bingham and H. Mannila, “Random projection in dimensionality reduction: Applications to image and text data,” in Proceedings of the Seventh ACM SIGKDD International Conference on Knowledge Discovery and Data Mining.
+			\item[37] B. Scholkopf and A. J. Smola, Learning with Ker- nels: Support Vector Machines, Regularization, Optimization,andBeyond. Cambridge,MA,USA: MIT Press, 2001.
+			\item[38] I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016.
+			\item[39] D. Arp, M. Spreitzenbarth, M. Hubner, H. Gascon, and K. Rieck, “Drebin: Effective and explainable detection of android malware in your pocket.” in NDSS, 2014.
+			\item[40] F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Van- derplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay, “Scikit-learn: Ma- chine learning in Python,” Journal of Machine Learning Research, vol. 12, pp. 2825–2830, 2011.
+			18
+			\item[41] Theano Development Team, “Theano: A Python framework for fast computation of mathematical expressions,” arXiv e-print arXiv:1605.02688.
+			\item[42] S. Dieleman and J. S. et.al., “Lasagne: First release.” Aug. 2015. \item[Online]. Available: http: //dx.doi.org/10.5281/zenodo.27878
+			\item[43] C. Smutz and A. Stavrou, “When a tree falls: Us- ing diversity in ensemble classifiers to identify eva- sion in malware detectors,” in 23nd Annual Net- work and Distributed System Security Symposium, NDSS 2016.
+			\item[44] D. Lowd and C. Meek, “Adversarial learning,” in
+			Proceedings of the eleventh ACM SIGKDD interna- tional conference on Knowledge discovery in data
+			mining. ACM, 2005, pp. 641–647.
+			\item[45] N.Dalvi,P.Domingos,S.Sanghai,D.Vermaetal., “Adversarial classification,” in Proceedings of the tenth ACM SIGKDD international conference on Knowledge discovery and data mining. ACM, 2004, pp. 99–108.
+			\item[46] B. I. Rubinstein, B. Nelson, L. Huang, A. D. Joseph, S.-h. Lau, S. Rao, N. Taft, and J. Tygar, “Antidote: understanding and defending against poisoning of anomaly detectors,” in Proceedings of the 9th ACM SIGCOMM conference on Internet measurement conference. ACM, 2009, pp. 1–14.
+			\item[47] ——, “Stealthy poisoning attacks on pca-based anomaly detectors,” ACM SIGMETRICS Perfor- mance Evaluation Review, vol. 37, no. 2, pp. 73– 74, 2009.
+			\item[48] M. Kloft and P. Laskov, “Online anomaly detection under adversarial impact.” in AISTATS, 2010, pp. 405–412.
+			\item[49] A. Fawzi, S.-M. Moosavi-Dezfooli, and P. Frossard, “Robustness of classifiers: from adversarial to random noise,” arXiv preprint arXiv:1608.08967, 2016.
+			\item[50] T. Tanay and L. Griffin, “A boundary tilting persepective on the phenomenon of adversarial ex- amples,” arXiv preprint arXiv:1608.07690, 2016.
+			\item[51] N. Papernot, P. D. McDaniel, X. Wu, S. Jha, and A. Swami, “Distillation as a defense to adversar- ial perturbations against deep neural networks,” in IEEE Symposium on Security and Privacy, SP 2016, 2016, pp. 582–597.
+			\item[52] S. Gu and L. Rigazio, “Towards deep neural net- work architectures robust to adversarial examples,” arXiv preprint arXiv:1412.5068, 2014.
+			\item[53] U. Shaham, Y. Yamada, and S. Negahban, “Under- standing adversarial training: Increasing local sta- bility of neural nets through robust optimization,” arXiv preprint arXiv:1511.05432, 2015.
+			\item[54] Q. Zhao and L. D. Griffin, “Suppressing the un- usual: towards robust cnns using symmetric activa- tion functions,” arXiv preprint arXiv:1603.05145, 2016.
+			\item[55] Y. Luo, X. Boix, G. Roig, T. Poggio, and Q. Zhao, “Foveation-based mechanisms alleviate adversar- ial examples,” arXiv preprint arXiv:1511.06292, 2015.
+			\item[56] R. Huang, B. Xu, D. Schuurmans, and C. Szepesva ́ri, “Learning with a strong adver- sary,” CoRR, abs/1511.03034, 2015.
+			\item[57] D. Hendrycks and K. Gimpel, “Visible progress on adversarial images and a new saliency map,” arXiv preprint arXiv:1608.00530, 2016.
+			\item[58] G. K. Dziugaite, Z. Ghahramani, and D. M. Roy, “A study of the effect of jpg compression on adver- sarial images,” arXiv preprint arXiv:1608.00853, 2016.
+			\item[59] Q. Wang, W. Guo, K. Zhang, X. Xing, C. L. Giles, and X. Liu, “Random feature nullification for ad- versary resistant deep architecture,” arXiv preprint arXiv:1610.01239, 2016.
+			\item[60] F. Zhang, P. P. Chan, B. Biggio, D. S. Yeung, and F. Roli, “Adversarial feature selection against eva- sion attacks,” IEEE Transactions on Cybernetics, vol. 46, no. 3, pp. 766–777, 2016.
+		\end{itemize}
 	\section{附录}
 	\subsection{测量对抗成功}
-		回想一下，我们在第4部分中使用了一种特殊的对抗性的成功。还有两个相关的概念可以被使用：对于每一个x，我们检查yfor（=f（x)）=f（x）是否为f（x）。这就计算出了对抗样本的总数，其中的扰动会导致由分类器为干净的样本x分配的类发生变化。可能是这样的情况，无论是干净的还是敌对的样本都没有被分配到真正的y，因为分类器在测试装置上没有百分之百的精度（也可能在训练集上），然而，也可能是添加微扰导致分类器正确地对先前错误的输入进行分类。我们可能有f（x）6=y，但是yv=y，这是不太可能但可能发生的情况。
-		对于每一个x，我们检查是否yv=y。这计算了在摄动后的类不等于真正的类的敌对样本的总数。然而，这一数字还将包括那些具有对抗性的样本，而这些样本已经被错误地分类了。在这种情况下，不管攻击或防御的有效性如何，错误分类的对抗样本的百分比不能低于基线的分类器在良性测试样本上的不准确，这代表了对任何攻击的有效性的下限。
-		目前还不清楚这三种统计中哪一项在之前的工作中被认为是敌对的成功。我们在实验中计算了所有3项，发现它们是相似的。
+		回想一下，我们在第4部分中使用了一种特殊的对抗性的成功。还有两个相关的概念可能被使用：
+		\begin{itemize}
+			\item 对于每一个$\bm{x}$，我们检查$y_adv(=f(\bm{x}_adv))=f(\bm{x})$是否成立。这计算出了对抗样本的总数，其中的扰动会导致由分类器为干净的样本$\bm{x}$分配的类别发生变化。可能会出现这样的情况，无论是干净的还是敌对的样本都没有被分配到正确的类别，因为分类器在测试装置上没有百分之百的精度（也可能在训练集上），然而，也可能是添加微扰导致分类器正确地对先前错误的输入进行分类。我们可能有$f(\bm{x})not\in y$，但是$y_adv=y$，这是不太可能但可能发生的情况。
+			\item 对于每一个$\bm{x}$，我们检查是否$y_adv=y$。这计算了在摄动后的类不等于真正的类的敌对样本的总数。然而，这一数字还将包括那些具有对抗性的样本，而这些样本已经被错误地分类了。在这种情况下，不管攻击或防御的有效性如何，错误分类的对抗样本的百分比不能低于基线的分类器在良性测试样本上的不准确，这代表了对任何攻击的有效性的下限。
+		\end{itemize}
+		目前还不清楚这三种统计中哪一项在之前的工作中被认为是对方成功。我们在实验中计算了所有3项，发现它们是相似的。
 	\subsection{用于防御评估的测试数据的直觉}
 		使用的数据：规避攻击通常涉及到现有样本的修改化，使它们被错误地分类。如果一种攻击可以被认为是有效的，如果它导致了对来自训练集的敌对样本的高误分类率。由于各种原因，分类器在测试集上的准确性可能不高，而将敌对修改隔离为错误分类的原因可能是有问题的。此外，由于分类器通常是经过训练的，直到它们在训练集上有非常高的准确性，他们的决策界限反映了培训数据的分布，一个涉及到最少修改训练数据的攻击是成功的。
+		
 		我们对来自测试集的反式修改样本进行了评估，主要原因是在训练集上的过度拟合可能是防御效果的一个可能的原因，因此，对防御的准确评估应该包括从测试集中制作的对抗性样本。因此，一种防御机制使一个分类器更加安全，如果从测试集中的、经过修改的样本中，管道的分类精度高于原始分类器。精确度越高，防守就越精确。
-	\subsection{无线接节点网络服务}
-		我们还在一个卷积神经网络［38］上进行实验我们从纸上获得的架构，而不是et al.51这个CNNs的架构如下：它有两个卷积层，每个层有32个过滤器，后面是一个最大的池层，然后是另一个两个卷积层是64的过滤器,然后是一个最大的池层。最后，我们有两个完全连接的层，每个层都有200个神经，然后是一个回归函数输出，有10个神经元（在MNIST的10个类中）隐藏层的所有神经元都是ReLUs。我们把这个网络称为“网络报纸”。它的学习速度是0.1（在过去的10年里调整到0·01），并且50个时期的动量为0.9。批大小是MNIST的500个样本，在MNIST测试数据上我们在Papernot-CNN网络得到了一个分类精度是98.91%
+	\subsection{CNNs}
+		我们还在一个卷积神经网络［38］上进行实验我们从纸上获得的架构。这个CNNs的架构如下：它有两个卷积层，每个层有32个过滤器，后面是一个最大的池层，然后是另一个两个卷积层是64的过滤器,然后是一个最大的池层。最后，我们有两个完全连接的层，每个层都有200个神经，然后是一个回归函数输出，有10个神经元（在MNIST的10个类中）隐藏层的所有神经元都是ReLUs。我们把这个网络称为“网络报纸”。它的学习速度是0.1（在过去的10年里调整到0.01），并且50个时期的动量为0.9。批大小是MNIST的500个样本，在MNIST测试数据上我们在Papernot-CNN网络得到了一个分类精度是98.91\%。
 \end{document}

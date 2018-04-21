@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.4.4)  17 APR 2018 15:19
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.4.4)  22 APR 2018 05:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1318,7 +1318,28 @@ Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldsymbols=\mathgroup8
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 207.
-) (./main.aux)
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2016/04/27 v1.618033 publication quality tables
+\heavyrulewidth=\dimen179
+\lightrulewidth=\dimen180
+\cmidrulewidth=\dimen181
+\belowrulesep=\dimen182
+\belowbottomsep=\dimen183
+\aboverulesep=\dimen184
+\abovetopsep=\dimen185
+\cmidrulesep=\dimen186
+\cmidrulekern=\dimen187
+\defaultaddspace=\dimen188
+\@cmidla=\count161
+\@cmidlb=\count162
+\@aboverulesep=\dimen189
+\@belowrulesep=\dimen190
+\@thisruleclass=\count163
+\@lastruleclass=\count164
+\@thisrulewidth=\dimen191
+)
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -1339,8 +1360,7 @@ LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 6.
 LaTeX Font Info:    Try loading font information for T3+cmr on input line 6.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/tipa/t3cmr.fd
+ (/usr/local/texlive/2017/texmf-dist/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
 LaTeX Font Info:    ... okay on input line 6.
@@ -1428,7 +1448,7 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count161
+\c@section@level=\count165
 )
 LaTeX Info: Redefining \ref on input line 6.
 LaTeX Info: Redefining \pageref on input line 6.
@@ -1446,7 +1466,7 @@ LaTeX Info: Redefining \nameref on input line 6.
 * 
 * Font 'STFangsong' does not contain script 'CJK'.
 *************************************************
-\g__fontspec_family_STFangsong_int=\count162
+\g__fontspec_family_STFangsong_int=\count166
 .................................................
 . fontspec info: "no-font-shape"
 . 
@@ -1490,22 +1510,100 @@ Missing character: There is no ＃ in font [lmroman12-regular]:mapping=tex-text;
 
 LaTeX Warning: Command \textless invalid in math mode on input line 70.
 
-[6] [7] [8] [9] [10] [11] [12]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 158.
- [13]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 158.
+[6] [7] [8]
+Overfull \hbox (3.9622pt too wide) in alignment at lines 122--130
+[] [] [] []
+ []
+
+[9]
+File: figure_3_1.png Graphic file (type QTm)
+ <use  "figure_3_1.png" >
+File: figure_3_2.png Graphic file (type QTm)
+ <use  "figure_3_2.png" >
+File: figure_3_3.png Graphic file (type QTm)
+ <use  "figure_3_3.png" >
+[10]
+File: figure_4.png Graphic file (type QTm)
+ <use  "figure_4.png" >
+Missing character: There is no 了 in font [lmroman12-regular]:mapping=tex-text;!
+ [11]
+File: figure_5.png Graphic file (type QTm)
+ <use  "figure_5.png" >
+File: figure_6.png Graphic file (type QTm)
+ <use  "figure_6.png" >
+[12] [13] [14]
+File: figure_6.png Graphic file (type QTm)
+ <use  "figure_6.png" > [15]
+File: table_2.png Graphic file (type QTm)
+ <use  "table_2.png" > [16] [17]
+File: figure_10.png Graphic file (type QTm)
+
+<use  "figure_10.png" > [18] [19]
+Missing character: There is no ̧ in font [lmroman12-regular]:mapping=tex-text;!
+ [20]
+Overfull \hbox (6.16pt too wide) in paragraph at lines 248--249
+[]\TU/lmr/m/n/12 B.Biggio,B.Nelson,andP.Laskov, |\TU/STSong(0)/m/n/12 “\TU/lmr/
+m/n/12 Poisoningat- tacks against support vec-
+ []
+
+[21] [22] [23]
+Overfull \hbox (20.41873pt too wide) in paragraph at lines 274--275
+\TU/lmr/m/n/12 Machines, Regularization, Optimization,andBeyond. Cambridge,MA,U
+SA:
+ []
+
+[24]
+Overfull \hbox (16.85602pt too wide) in paragraph at lines 279--280
+\TU/lmr/m/n/12 computation of mathematical expressions,\TU/STSong(0)/m/n/12 ”| 
+\TU/lmr/m/n/12 arXiv e-print arXiv:1605.02688. 
+ []
+
+
+Overfull \hbox (12.54482pt too wide) in paragraph at lines 285--286
+[]\TU/lmr/m/n/12 N.Dalvi,P.Domingos,S.Sanghai,D.Vermaetal.,  |\TU/STSong(0)/m/n
+/12 “\TU/lmr/m/n/12 Adversarial classification,\TU/STSong(0)/m/n/12 ”|
+ []
+
+[25]
+Overfull \hbox (16.59982pt too wide) in paragraph at lines 289--290
+\TU/lmr/m/n/12 sifiers: from adversarial to random noise,\TU/STSong(0)/m/n/12 ”
+| \TU/lmr/m/n/12 arXiv preprint arXiv:1608.08967,
+ []
+
+
+Overfull \hbox (32.24782pt too wide) in paragraph at lines 294--295
+\TU/lmr/m/n/12 cnns using symmetric activa- tion functions,\TU/STSong(0)/m/n/12
+ ”| \TU/lmr/m/n/12 arXiv preprint arXiv:1603.05145,
+ []
+
+[26]
+Overfull \hbox (35.51982pt too wide) in paragraph at lines 295--296
+\TU/lmr/m/n/12 mechanisms alleviate adversar- ial examples,\TU/STSong(0)/m/n/12
+ ”| \TU/lmr/m/n/12 arXiv preprint arXiv:1511.06292,
+ []
+
+
+Overfull \hbox (24.75183pt too wide) in paragraph at lines 298--299
+\TU/lmr/m/n/12 of jpg compression on adver- sarial images,\TU/STSong(0)/m/n/12 
+”| \TU/lmr/m/n/12 arXiv preprint arXiv:1608.00853,
+ []
+
+[27] [28]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 316.
+ [29]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 316.
  (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 158.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 158.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 158.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 316.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 316.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 316.
  ) 
 Here is how much of TeX's memory you used:
- 25962 strings out of 493005
- 509488 string characters out of 6134597
- 539320 words of memory out of 5000000
- 29720 multiletter control sequences out of 15000+600000
+ 26081 strings out of 493005
+ 513035 string characters out of 6134597
+ 535065 words of memory out of 5000000
+ 29827 multiletter control sequences out of 15000+600000
  11667 words of font info for 62 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 57i,6n,67p,10455b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 57i,9n,67p,10455b,459s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.pdf (13 pages).
+Output written on main.pdf (29 pages).
